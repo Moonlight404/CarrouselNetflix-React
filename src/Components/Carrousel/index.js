@@ -87,7 +87,7 @@ class Carrousel extends React.Component {
     return  <div className="wrapper">
       { this.state.hoverCond && <div className="absolute-w">
       { this.state.itemPush.map((item, index) => (  
-        <li className={this.state.itemSlide == index  ? 'ativo' : ''}>
+        <li key={index} className={this.state.itemSlide == index  ? 'ativo' : ''}>
 
         </li>
       )) }
