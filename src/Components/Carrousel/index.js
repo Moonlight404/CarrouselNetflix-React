@@ -46,6 +46,9 @@ class Carrousel extends React.Component {
     this.setState(state => ({
       itemPush: []
     }))
+    if(this.state.itemSlide > this.state.maxItem){
+      this.state.itemSlide = this.state.maxItem
+    }
     var push = []
     for(let i=0; i< this.state.maxItem; i++){
       push.push({i})
