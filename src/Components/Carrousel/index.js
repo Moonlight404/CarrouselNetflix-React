@@ -11,7 +11,8 @@ class Carrousel extends React.Component {
       itemSlide: 0,
       maxItem: 6,
       moved: false,
-      itemPush: []
+      itemPush: [],
+      hoverCond: false
     }
   }
   componentDidMount(){
@@ -77,31 +78,40 @@ class Carrousel extends React.Component {
     this.forceUpdate()
   }
   }
+  hoverCarrousel(cond){
+    this.setState(state => ({
+      hoverCond: cond
+    }));
+  }
   render(){
     return  <div className="wrapper">
-      <div className="absolute-w">
+      { this.state.hoverCond && <div className="absolute-w">
       { this.state.itemPush.map((item, index) => (  
         <li className={this.state.itemSlide == index  ? 'ativo' : ''}>
 
         </li>
       )) }
-      </div>
+      </div> }
       <div className="title">
         <h1> { this.props.title } </h1>
       </div>
-    <div className="carrouselInner">
-      <div className="arrows">
-        <div 
+      <div className="carrouselInner"
+      onMouseEnter={() => this.hoverCarrousel(true)}
+      onMouseLeave={() => this.hoverCarrousel(false)}>
+      { this.state.hoverCond && 
+       <div className="arrows">
+        { this.state.itemSlide > 0 && <div 
         onClick={() => { this.moveLeft() }}
         className="arrow arrowLeft">
         <i className="fas fa-arrow-left"></i>
-        </div>
+        </div> }
         <div 
         onClick={() => { this.moveRight() }}
         className="arrow arrowRight">
         <i className="fas fa-arrow-right"></i>
         </div>
       </div>
+       }
       <div className={"listMovie " + (this.state.moved ? 'moved' : 'notMoved') }>
       { this.props.data.map((movie, index) => (  
         <div className="item" id={index} key={index}>
