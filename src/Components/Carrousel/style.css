@@ -41,7 +41,7 @@
 }
 
 .listMovie{
-    width: 100vw;
+    width: 210vw;
     max-width: 1000vw;
     height: 150px;
     white-space: nowrap;
@@ -49,6 +49,7 @@
     overflow: hidden;
     position: relative;
     top: 0px;
+    transition: 0.4s ease;
 }
 
 .carrouselInner{
@@ -57,10 +58,6 @@
 
 .item{
     display: inline;
-}
-
-.moved{
-    animation: 1s move;
 }
 
 .title{
@@ -98,18 +95,13 @@
 
 .wrapper{
     position: relative;
-    top: 140px;
+    top: 0px;
 }
 
 .ativo{
     background-color: #fff !important;
 }
 
-@keyframes move{
-    0%{
-        transform: translate3d(0%);
-    }
-    100%{
-        transform: translate3d(-100%);
-    }
+.last{
+    left: 7.40%;
 }

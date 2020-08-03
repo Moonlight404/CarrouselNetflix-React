@@ -23,16 +23,16 @@ class Carrousel extends React.Component {
   }
   resizeWindow(self){
     if(window.innerWidth >= 1384){
-      self.handleChange(5)
+      self.handleChange(6)
     }
     else if(window.innerWidth >= 1383){
-      self.handleChange(4)
+      self.handleChange(5)
     } else if(window.innerWidth >= 1069){
-      self.handleChange(3)
+      self.handleChange(4)
     } else if(window.innerWidth >= 803){
-      self.handleChange(2)
+      self.handleChange(3)
     } else if(window.innerWidth <= 623){
-      self.handleChange(1)
+      self.handleChange(2)
     } else{
       self.handleChange(5)
     }
@@ -61,10 +61,11 @@ class Carrousel extends React.Component {
   moveRight(){
     if(this.state.itemSlide >= this.state.maxItem - 1){
       return
-    } else{
+     } else{
     this.setState(state => ({
       itemSlide: state.itemSlide + 1
     }));
+    this.state.moved = false
     }
     this.forceUpdate()
   }
@@ -75,9 +76,10 @@ class Carrousel extends React.Component {
     this.setState(state => ({
       itemSlide: state.itemSlide - 1
     }));
+    this.state.moved = false
     this.forceUpdate()
   }
-  }
+}
   hoverCarrousel(cond){
     this.setState(state => ({
       hoverCond: cond
@@ -87,15 +89,13 @@ class Carrousel extends React.Component {
     return  <div className="wrapper">
       { this.state.hoverCond && <div className="absolute-w">
       { this.state.itemPush.map((item, index) => (  
-        <li key={index} className={this.state.itemSlide == index  ? 'ativo' : ''}>
-
-        </li>
+        <li key={index} className={this.state.itemSlide == index  ? 'ativo' : ''}/>
       )) }
       </div> }
       <div className="title">
         <h1> { this.props.title } </h1>
       </div>
-      <div className="carrouselInner"
+      <div className={"carrouselInner "}
       onMouseEnter={() => this.hoverCarrousel(true)}
       onMouseLeave={() => this.hoverCarrousel(false)}>
       { this.state.hoverCond && 
@@ -105,17 +105,20 @@ class Carrousel extends React.Component {
         className="arrow arrowLeft">
         <i className="fas fa-arrow-left"></i>
         </div> }
-        <div 
+        { parseInt(this.state.itemSlide) < parseInt(this.state.maxItem - 0.16) &&<div 
         onClick={() => { this.moveRight() }}
         className="arrow arrowRight">
         <i className="fas fa-arrow-right"></i>
-        </div>
+        </div> }
       </div>
        }
-      <div className={"listMovie " + (this.state.moved ? 'moved' : 'notMoved') }>
+      <div className={"listMovie " + 
+      (this.state.moved ? 'moved ' : 'notMoved ') +
+      (parseInt(this.state.itemSlide) == parseInt(this.state.maxItem - 0.16) ? 'last' : 'notLast') }
+      style={{transform: 'translateX(' + -50.9 * this.state.itemSlide + '%)'}} >
       { this.props.data.map((movie, index) => (  
         <div className="item" id={index} key={index}>
-        { this.state.itemSlide * this.state.CarrouselX <= index && <Movie image={movie.image}/> }
+        <Movie image={movie.image}/>
         </div>
        )) }
       </div>
