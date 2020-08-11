@@ -12,7 +12,8 @@ class Carrousel extends React.Component {
       maxItem: 6,
       moved: false,
       itemPush: [],
-      hoverCond: false
+      hoverCond: false,
+      width: -50.9
     }
   }
   componentDidMount(){
@@ -24,18 +25,27 @@ class Carrousel extends React.Component {
   resizeWindow(self){
     if(window.innerWidth >= 1384){
       self.handleChange(6)
+      self.changeWidth(-50.9)
     }
     else if(window.innerWidth >= 1383){
       self.handleChange(5)
+      self.changeWidth(-48.99)
     } else if(window.innerWidth >= 1069){
       self.handleChange(4)
+      self.changeWidth(-40.8)
     } else if(window.innerWidth >= 803){
       self.handleChange(3)
+      self.changeWidth(-20)
     } else if(window.innerWidth <= 623){
       self.handleChange(2)
+      self.changeWidth(-20)
     } else{
       self.handleChange(5)
+      self.changeWidth(-50.9)
     }
+  }
+  changeWidth(x){
+    this.setState({width: x})
   }
   handleChange(change) {
     this.setState(state => ({
@@ -77,6 +87,7 @@ class Carrousel extends React.Component {
       itemSlide: state.itemSlide - 1
     }));
     this.state.moved = false
+    
     this.forceUpdate()
   }
 }
@@ -97,7 +108,7 @@ class Carrousel extends React.Component {
       </div>
       <div className={"carrouselInner "}
       onMouseEnter={() => this.hoverCarrousel(true)}
-      onMouseLeave={() => this.hoverCarrousel(false)}>
+      onMouseLeave={() => this.hoverCarrousel(true)}>
       { this.state.hoverCond && 
        <div className="arrows">
         { this.state.itemSlide > 0 && <div 
@@ -114,11 +125,13 @@ class Carrousel extends React.Component {
        }
       <div className={"listMovie " + 
       (this.state.moved ? 'moved ' : 'notMoved ') +
-      (parseInt(this.state.itemSlide) == parseInt(this.state.maxItem - 0.16) ? 'last' : 'notLast') }
-      style={{transform: 'translateX(' + -50.9 * this.state.itemSlide + '%)'}} >
+      (parseInt(this.state.itemSlide) > 0 ? 'last' : 'notLast') }
+      style={{
+        transform: this.state.itemSlide > 0 ? `translateX(${this.state.width})%` : 'none'
+      }}>
       { this.props.data.map((movie, index) => (  
         <div className="item" id={index} key={index}>
-        <Movie image={movie.image}/>
+        { (this.state.CarrouselX) * (this.state.itemSlide) - 1 <= index &&  <Movie image={movie.image}/> }
         </div>
        )) }
       </div>

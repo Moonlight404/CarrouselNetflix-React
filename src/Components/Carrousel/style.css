@@ -23,11 +23,13 @@
 }
 
 .arrowLeft{
-    left: 20px;
+    left: 0px;
+    padding-left: 32px;
 }
 
 .arrowRight{
     right: 0px;
+    padding-right: 32px;
 }
 
 .arrows{
@@ -103,5 +105,5 @@
 }
 
 .last{
-    left: 7.40%;
+    left: -14.2%;
 }
