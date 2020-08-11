@@ -108,7 +108,7 @@ class Carrousel extends React.Component {
       </div>
       <div className={"carrouselInner "}
       onMouseEnter={() => this.hoverCarrousel(true)}
-      onMouseLeave={() => this.hoverCarrousel(true)}>
+      onMouseLeave={() => this.hoverCarrousel(false)}>
       { this.state.hoverCond && 
        <div className="arrows">
         { this.state.itemSlide > 0 && <div 
